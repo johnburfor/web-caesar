@@ -1,36 +1,39 @@
-def rotate_string(text,rot):
+def alphabet_position(character):
+    alphabet = 'abcdefghijklmnopqrstuvwxyz'
+    lower = character.lower()
+    return alphabet.index(lower)
 
-    output = ""
-    for i in range(0,len(text)):
-        output = output + rotate_character(text[i],rot)
+def rotate_string_13(text):
 
-    return output
+    rotated = ''
+    alphabet = 'abcdefghijklmnopqrstuvwxyz'
 
-def alphabet_position(users_letter):
+    for char in text:
+        rotated_idx = (alphabet_position(char) + 13) % 26
+        if char.isupper():
+            rotated = rotated + alphabet[rotated_idx].upper()
+        else:
+            rotated = rotated + alphabet[rotated_idx]
 
-    alphabet = []
-    for i in range(97,123):
-        alphabet.append(chr(i))
-
-    for i in range(0,len(alphabet)):
-        current = alphabet[i]
-        if users_letter == current.lower():
-            return i
+    return rotated
 
 def rotate_character(char, rot):
-
-    alphabet = []
-    for i in range(97,123):
-        alphabet.append(chr(i))
-
-    if char.isalpha():
-        new_position = alphabet_position(char) + int(rot)
-        new_position %= 26
+    alphabet = 'abcdefghijklmnopqrstuvwxyz'
+    rotated_idx = (alphabet_position(char) + rot) % 26
 
     if char.isupper():
-        current = alphabet[new_position]
-        return current.upper()
-    elif char.islower():
-        return alphabet[new_position]
+        return alphabet[rotated_idx].upper()
     else:
-        return char
+        return alphabet[rotated_idx]
+
+def rotate_string(text, rot):
+
+    rotated = ''
+
+    for char in text:
+        if (char.isalpha()):
+            rotated = rotated + rotate_character(char, rot)
+        else:
+            rotated = rotated + char
+
+    return rotated
